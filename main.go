@@ -5,19 +5,72 @@ import (
 	"cafe-manager/ui"
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
+	"fyne.io/fyne/v2/container"
+	"fyne.io/fyne/v2/storage"
+	"fyne.io/fyne/v2/theme"
+	"image/color"
 )
 
+type customTheme struct {
+	baseTheme fyne.Theme
+	fontRes   fyne.Resource
+}
+
+// Color برمی‌گرداند (از تم پایه استفاده می‌کنیم)
+func (t *customTheme) Color(name fyne.ThemeColorName, variant fyne.ThemeVariant) color.Color {
+	return t.baseTheme.Color(name, variant)
+}
+
+// Icon برمی‌گرداند
+func (t *customTheme) Icon(name fyne.ThemeIconName) fyne.Resource {
+	return t.baseTheme.Icon(name)
+}
+
+// Font برمی‌گرداند (همیشه قلم ما)
+func (t *customTheme) Font(style fyne.TextStyle) fyne.Resource {
+	return t.fontRes
+}
+
+// Size برمی‌گرداند
+func (t *customTheme) Size(name fyne.ThemeSizeName) float32 {
+	return t.baseTheme.Size(name)
+}
+
 func main() {
-	a := app.New()
+	// بارگذاری قلم از فایل
+	fontRes, err := fyne.LoadResourceFromPath("assets/fonts/IRANSansXFaNum-Regular.ttf")
+	if err != nil {
+		panic("Cannot load font: " + err.Error())
+	}
+
+	a := app.NewWithID("com.hessamzm.cafemanager")
+
+	// تنظیم تم سفارشی
+	custom := &customTheme{
+		baseTheme: theme.DefaultTheme(),
+		fontRes:   fontRes,
+	}
+	a.Settings().SetTheme(custom)
+
 	w := a.NewWindow("مدیریت کافه")
 
-	// اتصال به دیتابیس
-	db.Connect()
-	db.Migrate() // ایجاد جداول در صورت عدم وجود
+	// مثال: ست کردن آیکون
+	iconURI := storage.NewFileURI("icon.png")
+	if iconRes, err := storage.LoadResourceFromURI(iconURI); err == nil {
+		w.SetIcon(iconRes)
+	}
 
-	// بارگذاری UI
-	ui.LoadMainUI(w)
+	db.InitDB()
 
-	w.Resize(fyne.NewSize(900, 600))
+	tabs := container.NewAppTabs(
+		container.NewTabItem("مدیریت میزها", ui.NewTablesPage(w)),
+		container.NewTabItem("محصولات", ui.NewProductPage(w)),
+		container.NewTabItem("دسته‌بندی‌ها", ui.NewCategoryPage()),
+		container.NewTabItem("گزارش‌ها", ui.NewReportsPage(w)),
+		container.NewTabItem("سود و زیان", ui.NewSoodZiyanPage(w)),
+	)
+
+	w.SetContent(tabs)
+	w.Resize(fyne.NewSize(1200, 900))
 	w.ShowAndRun()
 }

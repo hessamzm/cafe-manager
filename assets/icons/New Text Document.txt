@@ -1,0 +1,16 @@
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    ens160:
+      addresses:
+        - 62.60.212.16/24
+      routes:
+        - to: 0.0.0.0/0
+          via: 62.60.212.1
+      dhcp4: no
+      accept-ra: false
+      nameservers:
+        addresses:
+          - 172.29.0.14
+          - 172.29.2.14
