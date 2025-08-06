@@ -1,102 +1,78 @@
-📌 Overview | معرفی
-Cafe Manager
-A desktop application for managing café operations: table reservations, orders (dine-in & takeaway), inventory, reporting, and accounting.
-یک برنامه دسکتاپ برای مدیریت کافه: رزرو میز، سفارشات (درون‌کافه و بیرون‌بر)، موجودی کالا، گزارش‌گیری و حسابداری.
+<<<<<<< HEAD
+# Cafe Manager
 
-🌟 Features | امکانات
-Table Management | مدیریت میزها
+**Desktop application for café management**  
+یک برنامه دسکتاپ برای مدیریت کافه
 
-Add/remove tables
+---
 
-Change status: Available, Reserved, Busy
+## 🌟 Features | امکانات  
+- **Table Management | مدیریت میزها**  
+  - Add/remove tables | افزودن/حذف میز  
+  - Change status: Available, Reserved, Busy | تغییر وضعیت: آماده، رزرو، مشغول  
+  - Open order form per table | باز کردن فرم ثبت سفارش برای هر میز  
+- **Product Catalog | کاتالوگ محصولات**  
+  - Categories & products | دسته‌بندی و محصولات  
+  - Add, edit, delete categories & products | افزودن، ویرایش، حذف  
+- **Order Processing | پردازش سفارش**  
+  - Dine-in & takeaway | سفارش درون‌کافه و بیرون‌بر  
+  - Multi-item orders with quantities & notes | سفارش چندمحصولی با تعداد و یادداشت  
+  - Settle orders, calculate totals & apply discounts | تسویه، محاسبه مجموع، اعمال تخفیف  
+- **Reporting | گزارش‌گیری**  
+  - Daily, weekly, monthly & custom-range sales reports (Persian dates) | گزارش روزانه، هفتگی، ماهانه و بازه‌ای (تاریخ شمسی)  
+  - Profit & Loss closing with fixed cost entries | بستن حساب سود و زیان با ورود هزینه‌های ثابت  
+  - Excel export: detailed sales, item summary, order-type breakdown | خروجی اکسل: فروش جزئی، جمع اقلام، تفکیک نوع سفارش  
+- **Accounting | حسابداری**  
+  - Track fixed expenses (rent, utilities…) | ثبت هزینه‌های ثابت (اجاره، قبوض...)  
+  - Calculate cost of goods sold vs. revenue | محاسبه بهای تمام‌شده و درآمد  
+  - Generate profit/loss statements | تولید صورت سود و زیان  
 
-Open order form per table
+---
 
-Product Catalog | کاتالوگ محصولات
+## 🚀 Installation | نصب  
+1. **Prerequisites | پیش‌نیازها**  
+   - Go ≥1.18  
+   - SQLite3  
+   - Fyne toolkit  
+2. **Clone the repository | کلون کردن مخزن**  
+   ```bash
+   git clone https://github.com/yourusername/cafe-manager.git
+   cd cafe-manager
+   ```  
+3. **Build & Run | ساخت و اجرا**  
+   ```bash
+   go mod tidy
+   go run main.go
+   ```  
+   Or build a binary:  
+   ```bash
+   go build -o CafeManager
+   ./CafeManager
+   ```  
 
-Categories & products
+---
 
-Add, edit, delete categories & products
+## 📋 Usage | راهنمای استفاده  
+1. **First launch**: creates `cafe.db` | اولین اجرا، ایجاد فایل دیتابیس  
+2. **Tables**: Add tables → Operations | مدیریت میزها → عملیات  
+3. **Products**: Categories & products → CRUD | مدیریت محصولات  
+4. **Orders**: From tables or “Takeaway” | ثبت سفارش درون‌کافه یا بیرون‌بر  
+5. **Reports**: Reports tab → choose date range → view/export | گزارش‌ها  
+6. **Profit & Loss**: P&L tab → enter fixed costs → close month | سود و زیان  
 
-Order Processing | پردازش سفارش
+---
 
-Dine-in & takeaway
+## 🤝 Contributing | مشارکت  
+Issues and Pull Requests are welcome!  
+برای باگ‌ها و درخواست ویژگی، PR ارسال کنید.
 
-Multi-item orders with quantities & notes
+---
 
-Settle orders, calculate totals & apply discounts
+## 📫 Contact | تماس  
+For customization or support, email:  
+✉️ **your.email@example.com**
 
-Reporting | گزارش‌گیری
+---
 
-Daily, weekly, monthly & custom-range sales reports (Persian dates)
-
-Profit & loss closing with fixed cost entries
-
-Excel export: detailed sales, item summary, order-type breakdown
-
-Accounting | حسابداری
-
-Track fixed expenses (rent, utilities…)
-
-Calculate cost of goods sold vs. revenue
-
-Generate profit/loss statements
-
-🚀 Installation | نصب
-Prerequisites
-
-Go ≥1.18
-
-SQLite3 (database)
-
-Fyne toolkit (go get fyne.io/fyne/v2)
-
-Clone
-
-bash
-Copy
-Edit
-git clone https://github.com/yourusername/cafe-manager.git
-cd cafe-manager
-Build & Run
-
-bash
-Copy
-Edit
-go mod tidy
-go run main.go
-— or —
-
-bash
-Copy
-Edit
-go build -o CafeManager
-./CafeManager
-📋 Usage | راهنمای استفاده
-First launch: creates cafe.db in working directory.
-
-Tables: Add tables → click “Operations” → take or close orders.
-
-Products: Define categories & products → use toolbar to add/edit/delete.
-
-Orders: From tables page or “Takeaway” → select items & quantities → save.
-
-Reports: Go to Reports tab → choose date range or presets → view & export to Excel.
-
-Profit & Loss: In P&L tab → enter fixed monthly costs → generate closing & export Excel.
-
-🤝 Contributing | مشارکت
-Feel free to submit issues or pull requests!
-برای باگ‌ها، درخواست ویژگی یا درگیری کد خوشحال می‌شویم Issue یا PR ارسال کنید.
-
-📫 Contact | تماس
-For customization, upgrades or support, email:
-
-✉️ your.email@example.com
-
-⚖️ License | مجوز
-This project is licensed under the MIT License.
-این پروژه تحت مجوز MIT عرضه می‌شود.
-
-Thank you for using Cafe Manager!
-از همراهی شما سپاس‌گزاریم!
+## ⚖️ License | مجوز  
+MIT License  
