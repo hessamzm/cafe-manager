@@ -70,7 +70,7 @@ Issues and Pull Requests are welcome!
 
 ## 📫 Contact | تماس  
 For customization or support, email:  
-✉️ **your.email@example.com**
+✉️ **zaremahmoodih@gmail.com**
 
 ---
 
