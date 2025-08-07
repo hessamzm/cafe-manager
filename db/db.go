@@ -370,3 +370,62 @@ func GetOrdersBetween(startDate, endDate string) ([]models.Order, float64) {
 
 	return orders, total
 }
+func GetOrderItemsForTable(tableID int) []models.OrderItem {
+	rows, _ := DB.Query(`
+		SELECT oi.id, oi.order_id, oi.product_id, p.name, oi.quantity, oi.unit_price
+		FROM order_items oi
+		JOIN orders o ON o.id = oi.order_id
+		JOIN products p ON p.id = oi.product_id
+		WHERE o.table_id = ? AND o.settled = 0
+	`, tableID)
+	defer rows.Close()
+
+	var items []models.OrderItem
+	for rows.Next() {
+		var item models.OrderItem
+		rows.Scan(&item.ID, &item.OrderID, &item.ProductID, &item.ProductName, &item.Quantity, &item.UnitPrice)
+		items = append(items, item)
+	}
+	return items
+}
+
+//func DeleteOrderItemByID(id int) {
+//	DB.Exec("DELETE FROM order_items WHERE id = ?", id)
+//}
+
+func UpdateOrderItemQuantity(id int, newQty int) {
+	DB.Exec("UPDATE order_items SET quantity = ? WHERE id = ?", newQty, id)
+}
+
+// RecalculateOrderTotalAmount محاسبه و ذخیره‌ی مجموع مبلغ سفارش
+func RecalculateOrderTotalAmount(orderID int) error {
+	rows, err := DB.Query("SELECT quantity, unit_price FROM order_items WHERE order_id = ?", orderID)
+	if err != nil {
+		return err
+	}
+	defer rows.Close()
+
+	var total float64
+	for rows.Next() {
+		var quantity int
+		var price float64
+		rows.Scan(&quantity, &price)
+		total += float64(quantity) * price
+	}
+
+	_, err = DB.Exec("UPDATE orders SET total_price = ? WHERE id = ?", total, orderID)
+	return err
+}
+func DeleteOrderItemByID(id int) {
+	var orderID int
+	_ = DB.QueryRow("SELECT order_id FROM order_items WHERE id = ?", id).Scan(&orderID)
+
+	DB.Exec("DELETE FROM order_items WHERE id = ?", id)
+
+	// بعد از حذف، مبلغ کل سفارش را به‌روز کن
+	RecalculateOrderTotalAmount(orderID)
+}
+func HasOrdersForTable(tableID int) bool {
+	orders, _ := GetOrdersByTableID(tableID)
+	return len(orders) > 0
+}

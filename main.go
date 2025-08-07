@@ -6,7 +6,6 @@ import (
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/container"
-	"fyne.io/fyne/v2/storage"
 	"fyne.io/fyne/v2/theme"
 	"image/color"
 )
@@ -37,28 +36,24 @@ func (t *customTheme) Size(name fyne.ThemeSizeName) float32 {
 }
 
 func main() {
-	// بارگذاری قلم از فایل
-	fontRes, err := fyne.LoadResourceFromPath("assets/fonts/IRANSansXFaNum-Regular.ttf")
-	if err != nil {
-		panic("Cannot load font: " + err.Error())
-	}
+	// دیگر نیازی به بارگذاری فایل از مسیر نیست چون از منابع embed شده استفاده می‌کنیم
+	// fontRes, err := fyne.LoadResourceFromPath("assets/fonts/IRANSansXFaNum-Regular.ttf")
+	// ...
 
 	a := app.NewWithID("com.hessamzm.cafemanager")
 
-	// تنظیم تم سفارشی
+	// تنظیم تم سفارشی با استفاده از فونت embed شده
 	custom := &customTheme{
 		baseTheme: theme.DefaultTheme(),
-		fontRes:   fontRes,
+		fontRes:   FontIRANSansRes, // <<-- استفاده از متغیر تعریف‌شده در assets.go
 	}
 	a.Settings().SetTheme(custom)
 
 	w := a.NewWindow("مدیریت کافه")
 
-	// مثال: ست کردن آیکون
-	iconURI := storage.NewFileURI("icon.png")
-	if iconRes, err := storage.LoadResourceFromURI(iconURI); err == nil {
-		w.SetIcon(iconRes)
-	}
+	// تنظیم آیکون با استفاده از منبع embed شده
+	// دیگر نیازی به استفاده از storage نیست
+	w.SetIcon(IconRes) // <<-- استفاده از متغیر تعریف‌شده در assets.go
 
 	db.InitDB()
 

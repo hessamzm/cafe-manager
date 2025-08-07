@@ -1,6 +1,8 @@
 package models
 
 type OrderItem struct {
+	ID          int
+	OrderID     int
 	ProductID   int
 	ProductName string
 	Quantity    int
