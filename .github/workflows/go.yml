@@ -48,7 +48,7 @@ jobs:
 
       - name: Build binary
         env:
-          CGO_ENABLED: 0
+          CGO_ENABLED: 1
         run: |
           mkdir -p bin
           go build -ldflags="-s -w" -o bin/cafe-manager
