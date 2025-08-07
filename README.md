@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Cafe Manager
 
 **Desktop application for café management**  
